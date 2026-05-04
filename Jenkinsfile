@@ -44,22 +44,22 @@ pipeline {
         }
 
         stage('Docker Build & Push') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-creds',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
-                )]) {
-                    sh """
-                        docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
-                        docker tag  ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest
-                        echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin
-                        docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
-                        docker push ${DOCKER_IMAGE}:latest
-                    """
-                }
-            }
+    steps {
+        withCredentials([usernamePassword(
+            credentialsId: 'dockerhub-creds',
+            usernameVariable: 'DOCKER_USER',
+            passwordVariable: 'DOCKER_PASS'
+        )]) {
+            sh '''
+                docker build -t ''' + env.DOCKER_IMAGE + ':' + env.BUILD_NUMBER + ''' .
+                docker tag ''' + env.DOCKER_IMAGE + ':' + env.BUILD_NUMBER + ' ' + env.DOCKER_IMAGE + ''':latest
+                echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                docker push ''' + env.DOCKER_IMAGE + ':' + env.BUILD_NUMBER + '''
+                docker push ''' + env.DOCKER_IMAGE + ''':latest
+            '''
         }
+    }
+}
 
         stage('Deploy to Kubernetes') {
             steps {
