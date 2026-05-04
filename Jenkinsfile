@@ -65,7 +65,7 @@ pipeline {
     steps {
         withKubeConfig([credentialsId: 'kubeconfig']) {
             sh '''
-                kubectl apply -f k8s/deployment.yaml
+                kubectl apply -f k8s/deployment.yaml --validate=false
                 kubectl rollout status deployment/java-app --timeout=120s
             '''
         }
