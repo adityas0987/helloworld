@@ -62,16 +62,15 @@ pipeline {
 }
 
         stage('Deploy to Kubernetes') {
-            steps {
-                withKubeConfig([credentialsId: 'kubeconfig']) {
-                    sh """
-                        sed -i 's|image: .*java-app.*|image: ${DOCKER_IMAGE}:${DOCKER_TAG}|' k8s/deployment.yaml
-                        kubectl apply -f k8s/deployment.yaml
-                        kubectl rollout status deployment/java-app --timeout=120s
-                    """
-                }
-            }
+    steps {
+        withKubeConfig([credentialsId: 'kubeconfig']) {
+            sh '''
+                kubectl apply -f k8s/deployment.yaml
+                kubectl rollout status deployment/java-app --timeout=120s
+            '''
         }
+    }
+}
     }
 
     post {

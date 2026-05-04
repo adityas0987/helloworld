@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: java-app
-        image: YOUR_DOCKERHUB_USERNAME/java-app:latest
+        image: adityas0987/java-app:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 8081
 ---
 apiVersion: v1
 kind: Service
