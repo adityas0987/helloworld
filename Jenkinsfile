@@ -29,7 +29,7 @@ pipeline {
 
         stage('SonarQube Scan') {
             steps {
-                withSonarQubeEnv('SonarQube') {   // name from Jenkins system config
+                withSonarQubeEnv('sonarqube') {   // name from Jenkins system config
                     sh 'mvn sonar:sonar -Dsonar.projectKey=${SONAR_PROJECT}'
                 }
             }
