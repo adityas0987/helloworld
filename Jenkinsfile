@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "YOUR_DOCKERHUB_USERNAME/java-app"
+        DOCKER_IMAGE = "adityas0987/java-app"
         DOCKER_TAG   = "${BUILD_NUMBER}"
         SONAR_PROJECT = "java-app"
     }
@@ -16,7 +16,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/YOUR_USERNAME/YOUR_REPO.git',
+                    url: 'https://github.com/adityas0987/helloworld.git',
                     credentialsId: 'github-creds'   // optional for public repos
             }
         }
