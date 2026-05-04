@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
+                git branch: 'master',
                     url: 'https://github.com/adityas0987/helloworld.git',
                     credentialsId: 'github-creds'   // optional for public repos
             }
