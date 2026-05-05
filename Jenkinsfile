@@ -68,7 +68,6 @@ pipeline {
                 sed -i 's|image: .*|image: ${DOCKER_IMAGE}:${BUILD_NUMBER}|' k8s/deployment.yaml
                 kubectl apply -f k8s/deployment.yaml --validate=false
                 kubectl rollout status deployment/java-app --timeout=120s
-                kubectl port-forward service/java-app-svc 8089:80
             """
         }
     }
