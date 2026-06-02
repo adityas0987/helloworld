@@ -51,11 +51,12 @@ pipeline {
             passwordVariable: 'DOCKER_PASS'
         )]) {
             sh '''
+                echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
                 docker build -t ''' + env.DOCKER_IMAGE + ':' + env.BUILD_NUMBER + ''' .
                 docker tag ''' + env.DOCKER_IMAGE + ':' + env.BUILD_NUMBER + ' ' + env.DOCKER_IMAGE + ''':latest
-                echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
                 docker push ''' + env.DOCKER_IMAGE + ':' + env.BUILD_NUMBER + '''
                 docker push ''' + env.DOCKER_IMAGE + ''':latest
+                docker logout
             '''
         }
     }
